@@ -3,6 +3,7 @@ package gift.controller;
 
 import gift.annotation.LoginMember;
 import gift.dto.OrderDTO;
+import gift.dto.OrderResponseDTO;
 import gift.model.Member;
 import gift.service.OrderService;
 import jakarta.validation.Valid;
@@ -31,7 +32,7 @@ public class OrderController {
 
     @GetMapping
     public String showOrderForm(@PathVariable Long optionId, Model model) {
-        OrderDTO orderDTO = new OrderDTO(optionId, 10L, "임시 메시지");
+        OrderResponseDTO orderDTO = new OrderResponseDTO(optionId, 10L, "임시 메시지");
         model.addAttribute("orderDTO", orderDTO);
         return "order_form";
     }
@@ -40,6 +41,7 @@ public class OrderController {
     @ResponseBody
     public ResponseEntity<String> addOrder(@PathVariable Long optionId, @RequestBody @Valid OrderDTO orderDTO,
         @LoginMember Member member) {
+        String accessToken = orderDTO.accessToken();
         try {
             orderService.createOrder(orderDTO, member.getEmail());
             return ResponseEntity.ok("주문이 성공적으로 완료되었습니다.");

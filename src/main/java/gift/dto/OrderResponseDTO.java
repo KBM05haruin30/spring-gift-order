@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record OrderDTO(
+public record OrderResponseDTO(
 
 
     @NotNull(message = "옵션 ID를 입력해야 합니다.")
@@ -15,9 +15,7 @@ public record OrderDTO(
     Long quantity,
 
     @NotBlank(message = "메시지를 입력하세요.")
-    String message,
-
-    String accessToken
+    String message
 ) {
 
 }

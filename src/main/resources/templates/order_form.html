@@ -11,7 +11,8 @@
 
     function submitOrderForm(event) {
       event.preventDefault();
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("jwtToken");
+      const accessToken = localStorage.getItem("accessToken");
       if (!token) {
         alert("로그인이 필요합니다.");
         return;
@@ -21,7 +22,8 @@
       const data = {
         optionId: form.optionId.value,
         quantity: form.quantity.value,
-        message: form.message.value
+        message: form.message.value,
+        accessToken: localStorage.getItem("accessToken")
       };
 
       fetch(form.action, {
