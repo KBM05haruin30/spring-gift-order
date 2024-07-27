@@ -2,7 +2,9 @@ package gift.service;
 
 import gift.config.KakaoProperties;
 import gift.dto.KakaoAccessTokenDTO;
+import gift.dto.KakaoUserInfoDTO;
 import java.net.URI;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,16 @@ public class KakaoService {
         body.add("redirect_url", kakaoProperties.redirectUrl());
         body.add("code", authorizationCode);
         return body;
+    }
+
+    public String getUserEmail(String accessToken) {
+        String url = "https://kapi.kakao.com/v2/user/me";
+        ResponseEntity<KakaoUserInfoDTO> response = restClient.get()
+            .uri(URI.create(url))
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+            .retrieve()
+            .toEntity(KakaoUserInfoDTO.class);
+        KakaoUserInfoDTO kakaoUserInfoDTO = response.getBody();
+        return kakaoUserInfoDTO.kakaoAccountDTO().email();
     }
 }
