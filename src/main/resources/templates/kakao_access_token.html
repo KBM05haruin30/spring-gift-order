@@ -6,25 +6,41 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const tokenElement = document.getElementById("token");
+      const emailElement = document.getElementById("email");
       let accessToken = null;
+      let email = null;
       if (tokenElement) {
         accessToken = tokenElement.textContent;
+      }
+
+      if (emailElement) {
+        email = emailElement.textContent;
       }
 
       if (accessToken) {
         localStorage.setItem('authToken', accessToken);
       }
 
+      if (email) {
+        localStorage.setItem('userEmail', email);
+      }
+
       const storedToken = localStorage.getItem('authToken');
+      const storedEmail = localStorage.getItem('userEmail');
       if (storedToken) {
         document.getElementById('displayToken').textContent = storedToken;
+      }
+
+      if (storedEmail) {
+        document.getElementById('displayEmail').textContent = storedEmail;
       }
     });
   </script>
 </head>
 <body>
 <h1>카카오 액세스 토큰 얻기</h1>
-<p>액세스 토큰: <span id="displayToken"></span></p>
+<p>이메일: <span id="displayEmail"></span></p>
 <p id="token" th:text="${accessToken}" style="display: none"></p>
+<p id="email" th:text="${email}" style="display: none"></p>a
 </body>
 </html>

@@ -33,7 +33,9 @@ public class KakaoLoginController {
         RedirectAttributes redirectAttributes) {
         if (authorizationCode != null) {
             String accessToken = kakaoService.getAccessToken(authorizationCode);
+            String email = kakaoService.getUserEmail(accessToken);
             redirectAttributes.addFlashAttribute("accessToken", accessToken);
+            redirectAttributes.addFlashAttribute("email", email);
             return "redirect:/kakao/success";
         }
         String loginUrl = kakaoService.generateKakaoLoginUrl();
