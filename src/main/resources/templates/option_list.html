@@ -21,6 +21,7 @@
     <th>수량</th>
     <th>수정</th>
     <th>삭제</th>
+    <th>주문하기</th>
   </tr>
   </thead>
   <tbody>
@@ -41,6 +42,12 @@
           method="post">
         <input type="hidden" name="_method" value="delete"/>
         <button type="submit">삭제</button>
+      </form>
+    </td>
+    <td>
+      <form
+          th:action="@{/orders/{optionId}(optionId=${option.id})}" method="get">
+        <button type="submit">주문하기</button>
       </form>
     </td>
   </tr>

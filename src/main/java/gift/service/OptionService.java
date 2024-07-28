@@ -1,7 +1,6 @@
 package gift.service;
 
 import gift.dto.OptionDTO;
-import gift.dto.OptionSubtractQuantityDTO;
 import gift.model.Option;
 import gift.model.Product;
 import gift.repository.OptionRepository;
@@ -61,9 +60,8 @@ public class OptionService {
     }
 
     @Transactional
-    public void subtractQuantity(Long optionId, OptionSubtractQuantityDTO optionSubtractQuantityDTO) {
+    public void subtractQuantity(Long optionId, Long subtractQuantity) {
         Option option = optionRepository.findById(optionId).orElse(null);
-        Long subtractQuantity = optionSubtractQuantityDTO.subtractQuantity();
         option.subtractQuantity(subtractQuantity);
         optionRepository.save(option);
     }

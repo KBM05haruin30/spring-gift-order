@@ -2,6 +2,7 @@ package gift.controller;
 
 
 import gift.config.KakaoProperties;
+import gift.model.Member;
 import gift.service.KakaoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,12 @@ public class KakaoLoginController {
         RedirectAttributes redirectAttributes) {
         if (authorizationCode != null) {
             String accessToken = kakaoService.getAccessToken(authorizationCode);
+            String email = kakaoService.getUserEmail(accessToken);
+            Member member = kakaoService.saveKakaoUser(email);
+            String jwtToken = kakaoService.generateToken(member.getEmail(), member.getRole());
             redirectAttributes.addFlashAttribute("accessToken", accessToken);
+            redirectAttributes.addFlashAttribute("email", email);
+            redirectAttributes.addFlashAttribute("jwtToken", jwtToken);
             return "redirect:/kakao/success";
         }
         String loginUrl = kakaoService.generateKakaoLoginUrl();
